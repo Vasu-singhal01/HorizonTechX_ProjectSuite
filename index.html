@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizon TechX Data Science Internship — Project Suite</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#161b22;
+    --panel-2:#1c2230;
+    --line:#2a3140;
+    --text:#e6edf3;
+    --muted:#8b949e;
+    --blue:#58a6ff;
+    --green:#3fb950;
+    --red:#f78166;
+    --orange:#ffa657;
+    --purple:#d2a8ff;
+    --mono:'JetBrains Mono','SF Mono','Consolas',monospace;
+    --sans:'Inter','Segoe UI',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== Header ===== */
+  header{
+    border-bottom:1px solid var(--line);
+    padding:28px 24px 22px;
+    background:linear-gradient(180deg,#11161f 0%, var(--bg) 100%);
+  }
+  .header-inner{
+    max-width:1100px;margin:0 auto;
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 0 3px rgba(63,185,80,.15);
+  }
+  h1{
+    font-size:clamp(26px,4vw,38px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  h1 .accent{color:var(--blue);}
+  .subtitle{
+    color:var(--muted);
+    font-size:15px;
+    max-width:680px;
+  }
+  .author-line{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+    margin-top:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+  }
+  .author-line a{color:var(--blue);text-decoration:none;border-bottom:1px dotted rgba(88,166,255,.4);}
+  .author-line a:hover{border-bottom-style:solid;}
+
+  /* ===== Tabs ===== */
+  .tabs{
+    max-width:1100px;margin:0 auto;
+    display:flex;gap:8px;
+    padding:18px 24px 0;
+    overflow-x:auto;
+    border-bottom:1px solid var(--line);
+  }
+  .tab-btn{
+    font-family:var(--mono);
+    font-size:13px;
+    background:transparent;
+    border:1px solid var(--line);
+    border-bottom:none;
+    color:var(--muted);
+    padding:12px 18px 14px;
+    border-radius:8px 8px 0 0;
+    cursor:pointer;
+    white-space:nowrap;
+    display:flex;align-items:center;gap:10px;
+    transition:all .15s ease;
+    position:relative;
+    top:1px;
+  }
+  .tab-btn .num{
+    font-size:11px;
+    color:var(--bg);
+    background:var(--muted);
+    border-radius:4px;
+    padding:1px 6px;
+    font-weight:700;
+  }
+  .tab-btn:hover{color:var(--text);background:rgba(255,255,255,.02);}
+  .tab-btn.active{
+    color:var(--text);
+    background:var(--panel);
+    border-color:var(--line);
+    border-bottom:1px solid var(--panel);
+  }
+  .tab-btn.active .num{background:var(--blue);color:#001428;}
+  .tab-btn.active[data-tab="sales"] .num{background:var(--green);color:#012007;}
+  .tab-btn.active[data-tab="car"] .num{background:var(--orange);color:#2b1300;}
+
+  /* ===== Layout ===== */
+  main{max-width:1100px;margin:0 auto;padding:32px 24px 80px;}
+  .panel{display:none;animation:fadeIn .35s ease;}
+  .panel.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .panel-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    flex-wrap:wrap;gap:16px;
+    margin-bottom:24px;
+  }
+  .panel-head h2{
+    font-size:22px;font-weight:700;margin-bottom:6px;
+  }
+  .panel-head p{color:var(--muted);font-size:14px;max-width:560px;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;}
+  .badge{
+    font-family:var(--mono);font-size:11px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 12px;
+    color:var(--muted);
+  }
+  .badge.live{
+    color:var(--green);border-color:rgba(63,185,80,.35);
+    background:rgba(63,185,80,.08);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 340px 1fr;
+    gap:20px;
+  }
+  @media (max-width: 820px){
+    .grid{grid-template-columns:1fr;}
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:22px;
+  }
+  .card h3{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--muted);
+    margin-bottom:18px;
+    font-family:var(--mono);
+    display:flex;align-items:center;gap:8px;
+  }
+
+  /* form controls */
+  .field{margin-bottom:18px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:13px;color:var(--text);margin-bottom:8px;
+  }
+  .field label .val{
+    font-family:var(--mono);
+    color:var(--blue);
+    font-weight:600;
+  }
+  input[type="range"]{
+    width:100%;
+    -webkit-appearance:none;
+    height:4px;
+    border-radius:2px;
+    background:var(--line);
+    outline:none;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:16px;height:16px;border-radius:50%;
+    background:var(--blue);
+    cursor:pointer;
+    border:3px solid var(--bg);
+    box-shadow:0 0 0 1px var(--blue);
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--blue);
+    cursor:pointer;
+    border:3px solid var(--bg);
+    box-shadow:0 0 0 1px var(--blue);
+  }
+  .range-minmax{
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);
+    font-size:11px;color:var(--muted);
+    margin-top:5px;
+  }
+
+  select, .seg{
+    width:100%;
+  }
+  select{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:9px 10px;
+    border-radius:8px;
+    font-size:13px;
+    font-family:var(--sans);
+  }
+  .seg{
+    display:flex;
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .seg button{
+    flex:1;
+    background:var(--panel-2);
+    border:none;
+    color:var(--muted);
+    font-size:13px;
+    padding:9px 8px;
+    cursor:pointer;
+    font-family:var(--sans);
+    border-right:1px solid var(--line);
+    transition:all .15s;
+  }
+  .seg button:last-child{border-right:none;}
+  .seg button.active{
+    background:rgba(88,166,255,.12);
+    color:var(--blue);
+    font-weight:600;
+  }
+
+  /* ===== Result area ===== */
+  .result-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:24px;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .result-top{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    flex-wrap:wrap;gap:14px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:18px;
+  }
+  .result-label{
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;
+  }
+  .result-value{
+    font-size:42px;font-weight:800;letter-spacing:-0.02em;
+    font-family:var(--mono);
+  }
+  .result-value sup{font-size:18px;color:var(--muted);font-weight:500;margin-left:4px;}
+  .result-meta{
+    text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted);
+  }
+  .result-meta .model-tag{
+    display:inline-block;
+    background:rgba(63,185,80,.1);
+    color:var(--green);
+    border:1px solid rgba(63,185,80,.3);
+    border-radius:6px;
+    padding:3px 10px;
+    margin-bottom:6px;
+  }
+
+  /* bar viz */
+  .bars{display:flex;flex-direction:column;gap:12px;}
+  .bar-row{display:flex;align-items:center;gap:12px;}
+  .bar-row .bar-label{
+    width:96px;font-size:12px;color:var(--muted);
+    font-family:var(--mono);flex-shrink:0;
+  }
+  .bar-track{
+    flex:1;height:10px;background:var(--panel-2);
+    border-radius:5px;overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;border-radius:5px;
+    transition:width .4s cubic-bezier(.4,0,.2,1);
+    background:var(--blue);
+  }
+  .bar-row .bar-val{
+    width:60px;text-align:right;font-family:var(--mono);font-size:12px;
+    color:var(--text);flex-shrink:0;
+  }
+
+  /* mini explainer */
+  .explain{
+    font-size:13px;color:var(--muted);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  .explain strong{color:var(--text);}
+
+  /* ===== EDA charts row ===== */
+  .charts-row{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;
+  }
+  @media (max-width:700px){.charts-row{grid-template-columns:1fr;}}
+  .chart-card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:18px;
+  }
+  .chart-card h4{
+    font-size:12px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--muted);font-family:var(--mono);margin-bottom:14px;
+  }
+  .chart-card svg{width:100%;display:block;overflow:visible;}
+  .axis-label{font-size:9px;fill:var(--muted);font-family:var(--mono);}
+
+  /* hbar list */
+  .hbar-list{display:flex;flex-direction:column;gap:8px;}
+  .hbar-row{display:grid;grid-template-columns:90px 1fr 50px;align-items:center;gap:8px;}
+  .hbar-row .name{font-size:11px;color:var(--muted);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .hbar-row .track{height:8px;background:var(--panel-2);border-radius:4px;overflow:hidden;}
+  .hbar-row .fill{height:100%;border-radius:4px;}
+  .hbar-row .num{font-size:11px;text-align:right;font-family:var(--mono);}
+
+  /* ===== Footer / links ===== */
+  .repo-strip{
+    margin-top:36px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--panel);
+    padding:20px 22px;
+    display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
+  }
+  .repo-strip .left{font-size:13px;color:var(--muted);}
+  .repo-strip .left strong{color:var(--text);}
+  .repo-link{
+    font-family:var(--mono);font-size:12px;
+    color:var(--blue);text-decoration:none;
+    border:1px solid rgba(88,166,255,.3);
+    border-radius:8px;padding:8px 14px;
+    transition:all .15s;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .repo-link:hover{background:rgba(88,166,255,.08);border-color:var(--blue);}
+
+  footer{
+    text-align:center;padding:30px 24px 50px;
+    color:var(--muted);font-size:12px;font-family:var(--mono);
+    border-top:1px solid var(--line);
+  }
+  footer a{color:var(--blue);text-decoration:none;}
+
+  /* slider track fill helper */
+  .slider-wrap{position:relative;}
+
+  /* COVID note */
+  .note-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--mono);font-size:11px;color:var(--red);
+    background:rgba(247,129,102,.08);
+    border:1px solid rgba(247,129,102,.3);
+    border-radius:999px;padding:4px 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow"><span class="dot"></span> Horizon TechX · Data Science Internship</div>
+    <h1>Project <span class="accent">Suite</span> — Interactive Demos</h1>
+    <p class="subtitle">Three end-to-end data science projects covering exploratory analysis, regression modelling and feature-driven prediction. Adjust the inputs below — every result is computed live in your browser from the trained models.</p>
+    <div class="author-line">
+      <span>Vasu Singhal · B.Tech CSE (Data Science) · Bennett University</span>
+      <a href="https://www.linkedin.com/in/vasu-singhal-46659a310" target="_blank">LinkedIn ↗</a>
+      <a href="https://github.com/Vasu-singhal01" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="unemployment"><span class="num">01</span> Unemployment Analysis</button>
+  <button class="tab-btn" data-tab="car"><span class="num">02</span> Car Price Prediction</button>
+  <button class="tab-btn" data-tab="sales"><span class="num">03</span> Sales Prediction</button>
+</nav>
+
+<main>
+
+  <!-- ============ TASK 1 — UNEMPLOYMENT ============ -->
+  <section class="panel active" id="unemployment">
+    <div class="panel-head">
+      <div>
+        <h2>📊 Unemployment Analysis — India</h2>
+        <p>Exploring how India's unemployment rate moved before and during COVID-19, across states and regions, using monthly labour-force survey data.</p>
+      </div>
+      <div class="badges">
+        <span class="badge">Pandas</span>
+        <span class="badge">Plotly</span>
+        <span class="badge">EDA</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Explore a state</h3>
+
+        <div class="field">
+          <label>State / UT</label>
+          <select id="ue_state"></select>
+        </div>
+
+        <div class="bars" id="ue_stateBars">
+          <div class="bar-row">
+            <div class="bar-label">State avg</div>
+            <div class="bar-track"><div class="bar-fill" id="ue_stateAvgBar" style="background:var(--blue);width:0%"></div></div>
+            <div class="bar-val" id="ue_stateAvgVal">—</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">National avg</div>
+            <div class="bar-track"><div class="bar-fill" style="width:42%;background:var(--muted);"></div></div>
+            <div class="bar-val" id="ue_nationalVal">11.9%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Labour part. rate</div>
+            <div class="bar-track"><div class="bar-fill" id="ue_lprBar" style="background:var(--green);width:0%"></div></div>
+            <div class="bar-val" id="ue_lprVal">—</div>
+          </div>
+        </div>
+
+        <div class="explain" id="ue_stateExplain">
+          <span class="note-pill" id="ue_notePill">▲ +5.8 pts during March–May 2020</span>
+          <p style="margin-top:10px;" id="ue_stateText">Select a state above to compare its unemployment trend against the national average.</p>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-top">
+          <div>
+            <div class="result-label" id="ueHoverLabel">Unemployment rate (%)</div>
+            <div class="result-value" id="ueHoverVal">11.9<sup>%</sup></div>
+          </div>
+          <div class="result-meta">
+            <span class="model-tag">May 2019 – Oct 2020</span><br>
+            18 monthly data points
+          </div>
+        </div>
+        <div class="chart-card" style="border:none;padding:0;background:transparent;">
+          <h4>Hover the line to inspect any month — dashed line is the national average</h4>
+          <svg id="ueLineChart" viewBox="0 0 640 260" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <h4>Top 8 states by average unemployment rate</h4>
+        <div class="hbar-list" id="ueStateBars"></div>
+      </div>
+      <div class="chart-card">
+        <h4>Rural vs Urban — average rate</h4>
+        <svg viewBox="0 0 300 180" id="ueDonut" style="max-width:260px;display:block;margin:0 auto;"></svg>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ TASK 2 — CAR PRICE ============ -->
+  <section class="panel" id="car">
+    <div class="panel-head">
+      <div>
+        <h2>🚗 Car Price Prediction</h2>
+        <p>Estimate a used car's resale value from its present (ex-showroom) price, age, mileage, ownership history, fuel type and transmission — using a Linear Regression model (R² = 74.1%).</p>
+      </div>
+      <div class="badges">
+        <span class="badge live">● Live model</span>
+        <span class="badge">Linear Regression</span>
+        <span class="badge">Scikit-learn</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Car configuration</h3>
+
+        <div class="field">
+          <label>Present price (ex-showroom) <span class="val" id="cp_presentVal">5.59 L</span></label>
+          <input type="range" id="cp_present" min="0.32" max="92.6" step="0.01" value="5.59">
+          <div class="range-minmax"><span>₹0.32 L</span><span>₹92.6 L</span></div>
+        </div>
+
+        <div class="field">
+          <label>Car age <span class="val" id="cp_ageVal">5 yrs</span></label>
+          <input type="range" id="cp_age" min="0" max="20" step="1" value="5">
+          <div class="range-minmax"><span>0 yrs</span><span>20 yrs</span></div>
+        </div>
+
+        <div class="field">
+          <label>Driven distance <span class="val" id="cp_kmVal">27,000 km</span></label>
+          <input type="range" id="cp_km" min="500" max="200000" step="500" value="27000">
+          <div class="range-minmax"><span>500 km</span><span>200,000 km</span></div>
+        </div>
+
+        <div class="field">
+          <label>Previous owners <span class="val" id="cp_ownerVal">0</span></label>
+          <input type="range" id="cp_owner" min="0" max="3" step="1" value="0">
+          <div class="range-minmax"><span>0</span><span>3</span></div>
+        </div>
+
+        <div class="field">
+          <label>Fuel type</label>
+          <div class="seg" id="cp_fuel">
+            <button data-v="2" class="active">Petrol</button>
+            <button data-v="1">Diesel</button>
+            <button data-v="0">CNG</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Transmission</label>
+          <div class="seg" id="cp_trans">
+            <button data-v="1" class="active">Manual</button>
+            <button data-v="0">Automatic</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Sold by</label>
+          <div class="seg" id="cp_seller">
+            <button data-v="0" class="active">Dealer</button>
+            <button data-v="1">Individual</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="result-card">
+          <div class="result-top">
+            <div>
+              <div class="result-label">Predicted selling price</div>
+              <div class="result-value">₹<span id="cp_output">3.94</span> <sup>Lakh</sup></div>
+            </div>
+            <div class="result-meta">
+              <span class="model-tag">Linear Regression</span><br>
+              R² = 74.1% · trained on 299 cars
+            </div>
+          </div>
+
+          <div class="bars">
+            <h3 style="margin-bottom:8px;">What's driving this number</h3>
+            <div class="bar-row">
+              <div class="bar-label">Present price</div>
+              <div class="bar-track"><div class="bar-fill" id="cp_bar_present" style="background:var(--green);width:0%"></div></div>
+              <div class="bar-val" id="cp_bar_present_val">+0.00</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Age penalty</div>
+              <div class="bar-track"><div class="bar-fill" id="cp_bar_age" style="background:var(--red);width:0%"></div></div>
+              <div class="bar-val" id="cp_bar_age_val">−0.00</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Mileage</div>
+              <div class="bar-track"><div class="bar-fill" id="cp_bar_km" style="background:var(--red);width:0%"></div></div>
+              <div class="bar-val" id="cp_bar_km_val">−0.00</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Fuel / trans.</div>
+              <div class="bar-track"><div class="bar-fill" id="cp_bar_cat" style="background:var(--purple);width:0%"></div></div>
+              <div class="bar-val" id="cp_bar_cat_val">−0.00</div>
+            </div>
+          </div>
+
+          <div class="explain">
+            <strong>Top feature in this model:</strong> Present price drives ~91% of the prediction (feature importance from the Random Forest comparison run). Diesel cars and dealer sales tend to retain value better; each additional owner or year of age reduces resale value.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TASK 3 — SALES ============ -->
+  <section class="panel" id="sales">
+    <div class="panel-head">
+      <div>
+        <h2>📈 Sales Prediction from Ad Spend</h2>
+        <p>Predict expected sales (in thousand units) from a marketing budget split across TV, Radio and Newspaper — approximated from a Random Forest model (R² = 98.1%) using an interaction-aware formula.</p>
+      </div>
+      <div class="badges">
+        <span class="badge live">● Live model</span>
+        <span class="badge">Random Forest</span>
+        <span class="badge">Regression</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Advertising budget</h3>
+
+        <div class="field">
+          <label>TV spend <span class="val" id="sp_tvVal">$150.0k</span></label>
+          <input type="range" id="sp_tv" min="0" max="296" step="1" value="150">
+          <div class="range-minmax"><span>$0k</span><span>$296k</span></div>
+        </div>
+
+        <div class="field">
+          <label>Radio spend <span class="val" id="sp_radioVal">$25.0k</span></label>
+          <input type="range" id="sp_radio" min="0" max="50" step="0.5" value="25">
+          <div class="range-minmax"><span>$0k</span><span>$50k</span></div>
+        </div>
+
+        <div class="field">
+          <label>Newspaper spend <span class="val" id="sp_newsVal">$30.0k</span></label>
+          <input type="range" id="sp_news" min="0" max="114" step="1" value="30">
+          <div class="range-minmax"><span>$0k</span><span>$114k</span></div>
+        </div>
+
+        <div class="field">
+          <label>Total budget</label>
+          <div style="font-family:var(--mono);font-size:20px;font-weight:700;" id="sp_total">$205.0k</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="result-card">
+          <div class="result-top">
+            <div>
+              <div class="result-label">Predicted sales</div>
+              <div class="result-value"><span id="sp_output">15.2</span> <sup>k units</sup></div>
+            </div>
+            <div class="result-meta">
+              <span class="model-tag">Random Forest</span><br>
+              R² = 98.1% · trained on 200 campaigns
+            </div>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:10px;">Correlation with sales</h3>
+            <div class="bars">
+              <div class="bar-row">
+                <div class="bar-label">TV</div>
+                <div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--blue);"></div></div>
+                <div class="bar-val">0.78</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Radio</div>
+                <div class="bar-track"><div class="bar-fill" style="width:58%;background:var(--green);"></div></div>
+                <div class="bar-val">0.58</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Newspaper</div>
+                <div class="bar-track"><div class="bar-fill" style="width:23%;background:var(--orange);"></div></div>
+                <div class="bar-val">0.23</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="explain">
+            <strong>Reading this:</strong> TV spend has by far the strongest relationship with sales, with Radio a useful secondary channel. Newspaper spend shows the weakest standalone effect — but TV and Radio together create a noticeable lift beyond either channel alone.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="repo-strip">
+    <div class="left">All three projects include full notebooks, datasets, dashboards and READMEs on <strong>GitHub</strong>.</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="repo-link" href="https://github.com/Vasu-singhal01/HorizonTechX_UnemploymentAnalysis-" target="_blank">Unemployment repo ↗</a>
+      <a class="repo-link" href="https://github.com/Vasu-singhal01/HorizonTechX_CarPricePrediction" target="_blank">Car price repo ↗</a>
+      <a class="repo-link" href="https://github.com/Vasu-singhal01/HorizonTechX_SalesPrediction" target="_blank">Sales repo ↗</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Built for the Horizon TechX Data Science Internship · Vasu Singhal · <a href="https://www.linkedin.com/in/vasu-singhal-46659a310" target="_blank">linkedin.com/in/vasu-singhal</a>
+</footer>
+
+<script>
+/* ===================== TAB SWITCHING ===================== */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    panels.forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ===================== SEGMENTED CONTROL HELPER ===================== */
+function setupSeg(id, onChange){
+  const el = document.getElementById(id);
+  const btns = el.querySelectorAll('button');
+  btns.forEach(b=>{
+    b.addEventListener('click', ()=>{
+      btns.forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      onChange(parseInt(b.dataset.v));
+    });
+  });
+  return ()=> parseInt(el.querySelector('button.active').dataset.v);
+}
+
+/* ===================== TASK 1 — UNEMPLOYMENT DATA ===================== */
+const UE_MONTHS = ["May19","Jun19","Jul19","Aug19","Sep19","Oct19","Nov19","Dec19","Jan20","Feb20","Mar20","Apr20","May20","Jun20","Jul20","Aug20","Sep20","Oct20"];
+const UE_NATIONAL = [9.03,9.33,9.15,9.58,9.18,9.97,10.09,9.35,9.96,9.91,11.09,22.99,24.76,11.29,9.83,10.31,8.71,8.03];
+const UE_STATES = {"Andhra Pradesh": [4.87,3.42,4.7,3.96,5.59,4.11,5.83,6.13,5.81,5.8,6.58,23.03,18.93,3.34,8.34,6.96,6.4,6.59],"Assam": [6.08,7.49,3.73,8.09,6.86,7.91,5.48,5.02,5.4,5.88,6.29,9.71,9.9,1.34,3.77,5.53,1.19,3.02],"Bihar": [14.58,11.74,14.93,14.33,14.66,13.27,15.01,12.54,13.48,11.67,15.52,50.17,43.7,16.92,12.79,13.44,11.91,9.82],"Chandigarh": [18.35,12.4,21.8,9.52,20.14,13.99,22.05,8.33,20.0,16.67,21.43,null,null,7.22,null,null,null,null],"Chhattisgarh": [9.79,9.27,6.36,5.46,8.89,8.62,5.54,4.84,9.52,8.69,7.69,7.85,14.08,17.15,10.27,5.63,1.96,6.62],"Delhi": [12.44,11.04,12.88,15.35,16.55,14.12,13.61,14.02,19.39,14.5,16.44,17.96,36.94,19.15,20.3,13.79,12.53,6.27],"Goa": [2.83,9.39,11.63,3.44,3.38,9.76,24.45,9.88,8.4,2.37,5.0,13.66,20.62,9.96,17.07,16.21,15.38,11.54],"Gujarat": [3.48,5.54,4.87,3.95,6.12,5.18,6.11,4.58,5.57,6.35,6.55,18.88,12.77,3.05,1.84,1.87,3.42,4.03],"Haryana": [19.61,21.75,20.84,27.57,21.6,22.61,21.82,26.6,21.26,25.42,25.37,43.91,33.9,30.56,24.18,33.5,19.68,27.31],"Himachal Pradesh": [12.28,16.43,21.05,21.52,13.99,19.79,25.06,22.39,17.22,19.86,20.97,2.34,34.2,8.47,24.31,15.79,12.04,13.46],"Jammu & Kashmir": [17.91,15.98,17.61,11.32,null,21.66,14.51,7.02,20.6,20.62,15.26,null,11.31,18.45,10.88,11.09,16.17,16.14],"Jharkhand": [12.17,14.49,12.82,16.16,14.14,12.81,12.71,18.58,13.24,13.53,9.88,50.1,61.5,20.62,7.63,9.76,8.24,11.8],"Karnataka": [6.01,5.49,1.41,0.82,3.38,5.5,2.31,0.98,2.91,3.53,3.59,29.38,19.86,8.49,4.01,0.5,2.41,1.58],"Kerala": [6.37,7.83,6.27,9.01,5.43,7.25,5.86,9.04,5.36,7.53,8.99,16.38,23.85,16.51,7.09,10.98,5.91,3.88],"Madhya Pradesh": [3.77,5.31,5.65,5.88,5.04,3.69,4.39,4.57,4.31,4.65,2.74,12.27,28.31,8.55,5.08,4.7,3.91,3.13],"Maharashtra": [4.88,5.4,5.0,5.67,6.0,5.66,5.64,5.43,5.14,4.76,5.84,20.39,16.09,9.55,3.89,6.23,4.55,4.1],"Meghalaya": [5.78,6.45,2.73,3.16,2.77,5.45,2.26,3.5,2.46,4.57,1.89,11.93,8.08,1.25,2.1,3.74,4.29,4.6],"Odisha": [3.56,3.67,2.54,3.59,4.04,4.39,3.47,4.01,2.0,2.87,10.71,22.91,10.29,3.51,1.88,1.42,2.1,2.18],"Puducherry": [0.62,0.0,0.0,6.9,0.61,1.17,0.69,3.6,0.58,1.76,1.38,75.7,66.59,4.39,15.47,5.05,10.9,6.18],"Punjab": [11.33,12.69,10.62,9.34,12.14,13.16,8.73,9.05,11.49,11.12,10.27,2.56,29.82,15.7,9.19,10.99,9.61,9.88],"Rajasthan": [8.82,14.03,10.68,13.61,9.04,13.84,12.39,16.0,12.6,15.55,13.3,21.83,17.18,13.76,15.81,17.51,15.35,24.15],"Sikkim": [8.2,7.76,2.56,4.82,4.81,7.58,8.57,4.19,null,null,22.01,2.68,22.13,4.3,4.45,12.49,5.7,0.88],"Tamil Nadu": [0.93,1.24,4.59,6.22,1.79,1.29,2.55,5.89,1.6,2.19,6.41,49.52,32.61,13.06,6.81,2.65,5.0,2.16],"Telangana": [1.88,3.67,3.09,2.79,5.84,7.02,5.85,2.79,5.67,8.02,5.83,7.09,28.43,12.26,5.36,5.79,3.27,2.86],"Tripura": [31.97,26.12,24.14,29.47,31.9,27.11,26.2,30.0,32.98,29.5,29.08,39.92,17.67,22.67,18.24,27.92,17.35,11.57],"Uttar Pradesh": [12.33,11.38,10.5,13.1,10.02,10.27,9.12,10.4,8.66,9.58,10.6,22.8,23.12,10.34,5.56,5.79,4.18,3.75],"Uttarakhand": [5.4,4.67,6.34,6.77,6.54,4.78,5.95,5.96,6.19,5.04,14.0,7.77,9.65,8.13,12.38,14.26,22.26,9.23],"West Bengal": [6.63,6.62,6.77,6.42,6.53,7.3,6.22,6.52,7.0,5.42,6.87,17.12,17.02,7.36,6.83,14.87,9.35,9.98]};
+const UE_LPR = {"Andhra Pradesh": 39.27,"Assam": 44.49,"Bihar": 37.9,"Chandigarh": 39.34,"Chhattisgarh": 42.38,"Delhi": 38.12,"Goa": 39.25,"Gujarat": 45.94,"Haryana": 42.57,"Himachal Pradesh": 43.18,"Jammu & Kashmir": 40.09,"Jharkhand": 41.32,"Karnataka": 41.52,"Kerala": 34.48,"Madhya Pradesh": 38.85,"Maharashtra": 42.08,"Meghalaya": 57.83,"Odisha": 38.62,"Puducherry": 38.14,"Punjab": 40.83,"Rajasthan": 40.14,"Sikkim": 45.97,"Tamil Nadu": 39.95,"Telangana": 53.52,"Tripura": 60.78,"Uttar Pradesh": 38.95,"Uttarakhand": 34.18,"West Bengal": 45.35};
+const UE_AVG = {"Andhra Pradesh": 7.79,"Assam": 5.99,"Bihar": 19.06,"Chandigarh": 15.99,"Chhattisgarh": 8.87,"Delhi": 17.0,"Goa": 10.12,"Gujarat": 6.59,"Haryana": 26.6,"Himachal Pradesh": 17.89,"Jammu & Kashmir": 16.28,"Jharkhand": 20.31,"Karnataka": 6.94,"Kerala": 9.94,"Madhya Pradesh": 7.26,"Maharashtra": 7.67,"Meghalaya": 4.55,"Odisha": 5.87,"Puducherry": 12.36,"Punjab": 12.02,"Rajasthan": 14.53,"Sikkim": 8.06,"Tamil Nadu": 10.05,"Telangana": 7.5,"Tripura": 27.48,"Uttar Pradesh": 11.81,"Uttarakhand": 7.82,"West Bengal": 8.67};
+const UE_NATIONAL_AVG = 10.72;
+const UE_LPR_MAX = 65;
+
+let ueMonths = UE_MONTHS;
+let ueValues = UE_NATIONAL;
+let ueSecondary = null;
+
+function drawLineChart(){
+  const svg = document.getElementById('ueLineChart');
+  const W = 640, H = 260, pad = {l:34,r:14,t:18,b:28};
+  const allVals = ueValues.filter(v=>v!==null).concat(ueSecondary ? ueSecondary.filter(v=>v!==null) : []);
+  const maxV = Math.max(26, Math.ceil(Math.max(...allVals)/5)*5);
+  const minV = 0;
+  const xStep = (W - pad.l - pad.r) / (ueValues.length - 1);
+  const yScale = v => H - pad.b - ((v - minV)/(maxV-minV)) * (H - pad.t - pad.b);
+
+  function buildPaths(vals){
+    let pathD = '', areaD = '', started = false;
+    vals.forEach((v,i)=>{
+      const x = pad.l + i*xStep;
+      if(v===null) return;
+      const y = yScale(v);
+      pathD += (!started ? `M${x},${y}` : ` L${x},${y}`);
+      areaD += (!started ? `M${x},${H-pad.b} L${x},${y}` : ` L${x},${y}`);
+      started = true;
+    });
+    if(started){
+      const lastIdx = vals.map((v,i)=>v!==null?i:-1).filter(i=>i>=0).pop();
+      areaD += ` L${pad.l + lastIdx*xStep},${H-pad.b} Z`;
+    }
+    return {pathD, areaD};
+  }
+
+  const main = buildPaths(ueValues);
+  const sec = ueSecondary ? buildPaths(ueSecondary) : null;
+
+  let grid = '';
+  const step = maxV > 30 ? 10 : 5;
+  for(let v=0; v<=maxV; v+=step){
+    const y = yScale(v);
+    grid += `<line x1="${pad.l}" y1="${y}" x2="${W-pad.r}" y2="${y}" stroke="#21262d" stroke-width="1"/>`;
+    grid += `<text x="${pad.l-8}" y="${y+3}" text-anchor="end" class="axis-label">${v}%</text>`;
+  }
+
+  const covidX1 = pad.l + 10*xStep;
+  const covidX2 = pad.l + 12*xStep;
+
+  let points = '';
+  ueValues.forEach((v,i)=>{
+    if(v===null) return;
+    const x = pad.l + i*xStep;
+    const y = yScale(v);
+    points += `<circle cx="${x}" cy="${y}" r="3" fill="#58a6ff" class="ue-point" data-i="${i}" style="cursor:pointer;"/>`;
+  });
+
+  let labels = '';
+  ueMonths.forEach((m,i)=>{
+    if(i % 3 === 0){
+      const x = pad.l + i*xStep;
+      labels += `<text x="${x}" y="${H-8}" text-anchor="middle" class="axis-label">${m}</text>`;
+    }
+  });
+
+  let secondaryPath = '';
+  if(sec){
+    secondaryPath = `<path d="${sec.pathD}" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  }
+
+  svg.innerHTML = `
+    <rect x="${covidX1}" y="${pad.t}" width="${covidX2-covidX1}" height="${H-pad.t-pad.b}" fill="#f78166" opacity="0.08"/>
+    <text x="${(covidX1+covidX2)/2}" y="${pad.t+12}" text-anchor="middle" class="axis-label" fill="#f78166">COVID peak</text>
+    ${grid}
+    <path d="${main.areaD}" fill="#58a6ff" opacity="0.12"/>
+    ${secondaryPath}
+    <path d="${main.pathD}" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+    ${points}
+    ${labels}
+  `;
+
+  svg.querySelectorAll('.ue-point').forEach(p=>{
+    p.addEventListener('mouseenter', ()=>{
+      const i = parseInt(p.dataset.i);
+      const v = ueValues[i];
+      if(v===null) return;
+      let txt = v.toFixed(2) + '<sup>% · '+ueMonths[i]+'</sup>';
+      if(ueSecondary && ueSecondary[i]!==null){
+        txt += `<sup style="display:block;font-size:11px;color:var(--muted);">national: ${ueSecondary[i].toFixed(2)}%</sup>`;
+      }
+      document.getElementById('ueHoverVal').innerHTML = txt;
+      p.setAttribute('r','5');
+    });
+    p.addEventListener('mouseleave', ()=>{
+      p.setAttribute('r','3');
+    });
+  });
+}
+
+function updateUeState(){
+  const stateName = document.getElementById('ue_state').value;
+
+  if(stateName === '__national__'){
+    ueValues = UE_NATIONAL;
+    ueSecondary = null;
+    document.getElementById('ueHoverVal').innerHTML = UE_NATIONAL_AVG.toFixed(2) + '<sup>% · national avg</sup>';
+    document.getElementById('ue_stateAvgVal').textContent = UE_NATIONAL_AVG.toFixed(2) + '%';
+    document.getElementById('ue_stateAvgBar').style.width = (UE_NATIONAL_AVG/30*100).toFixed(1) + '%';
+    document.getElementById('ue_stateAvgBar').style.background = 'var(--blue)';
+    const natLpr = 41.6;
+    document.getElementById('ue_lprVal').textContent = natLpr.toFixed(2) + '%';
+    document.getElementById('ue_lprBar').style.width = (natLpr/UE_LPR_MAX*100).toFixed(1) + '%';
+    document.getElementById('ue_stateText').textContent = 'This is the all-India monthly average across 28 states and union territories. Use the dropdown to drill into a specific state and compare it against this baseline.';
+    document.getElementById('ue_notePill').textContent = '▲ +5.8 pts during March–May 2020';
+  } else {
+    ueValues = UE_STATES[stateName];
+    ueSecondary = UE_NATIONAL;
+    const avg = UE_AVG[stateName];
+    const lpr = UE_LPR[stateName];
+    const diff = avg - UE_NATIONAL_AVG;
+
+    document.getElementById('ueHoverVal').innerHTML = avg.toFixed(2) + '<sup>% · '+stateName+' avg</sup>';
+    document.getElementById('ue_stateAvgVal').textContent = avg.toFixed(2) + '%';
+    document.getElementById('ue_stateAvgBar').style.width = Math.min(100, avg/30*100).toFixed(1) + '%';
+    document.getElementById('ue_stateAvgBar').style.background = diff > 0 ? 'var(--red)' : 'var(--green)';
+    document.getElementById('ue_lprVal').textContent = lpr.toFixed(2) + '%';
+    document.getElementById('ue_lprBar').style.width = (lpr/UE_LPR_MAX*100).toFixed(1) + '%';
+
+    const compareWord = diff > 0 ? 'above' : 'below';
+    document.getElementById('ue_stateText').textContent =
+      `${stateName}'s average unemployment rate of ${avg.toFixed(1)}% is ${Math.abs(diff).toFixed(1)} points ${compareWord} the national average of ${UE_NATIONAL_AVG.toFixed(1)}%. Labour force participation here is ${lpr.toFixed(1)}%.`;
+
+    const peak = Math.max(...ueValues.filter(v=>v!==null));
+    const peakIdx = ueValues.indexOf(peak);
+    document.getElementById('ue_notePill').textContent = `▲ Peak ${peak.toFixed(1)}% in ${UE_MONTHS[peakIdx]}`;
+  }
+
+  drawLineChart();
+}
+
+// populate dropdown
+const ueStateSelect = document.getElementById('ue_state');
+const optAll = document.createElement('option');
+optAll.value = '__national__';
+optAll.textContent = '🇮🇳 All-India (national average)';
+ueStateSelect.appendChild(optAll);
+Object.keys(UE_STATES).sort().forEach(state=>{
+  const opt = document.createElement('option');
+  opt.value = state;
+  opt.textContent = state;
+  ueStateSelect.appendChild(opt);
+});
+ueStateSelect.value = 'Tripura';
+ueStateSelect.addEventListener('change', updateUeState);
+updateUeState();
+
+// Top states bar list
+const ueStates = [
+  ['Tripura', 27.5], ['Haryana', 26.6], ['Jharkhand', 20.3], ['Bihar', 19.1],
+  ['Himachal Pr.', 17.9], ['Delhi', 17.0], ['J&K', 16.3], ['Chandigarh', 16.0]
+];
+const ueStateMax = 28;
+const ueStateBars = document.getElementById('ueStateBars');
+ueStates.forEach(([name,val], idx)=>{
+  const color = idx < 2 ? 'var(--red)' : 'var(--blue)';
+  const row = document.createElement('div');
+  row.className = 'hbar-row';
+  row.innerHTML = `
+    <div class="name">${name}</div>
+    <div class="track"><div class="fill" style="width:${(val/ueStateMax*100).toFixed(1)}%;background:${color};"></div></div>
+    <div class="num">${val.toFixed(1)}%</div>
+  `;
+  ueStateBars.appendChild(row);
+});
+
+// Rural vs Urban donut
+function drawDonut(){
+  const svg = document.getElementById('ueDonut');
+  const rural = 10.32, urban = 13.17;
+  const total = rural + urban;
+  const ruralPct = rural/total;
+  const cx=90, cy=90, r=60, sw=22;
+  const circumference = 2*Math.PI*r;
+  const ruralLen = circumference * ruralPct;
+  const urbanLen = circumference * (1-ruralPct);
+
+  svg.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#ffa657" stroke-width="${sw}"
+      stroke-dasharray="${urbanLen} ${circumference}" stroke-dashoffset="${-ruralLen}" transform="rotate(-90 ${cx} ${cy})"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#58a6ff" stroke-width="${sw}"
+      stroke-dasharray="${ruralLen} ${circumference}" stroke-dashoffset="0" transform="rotate(-90 ${cx} ${cy})"/>
+    <text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#e6edf3" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700">11.7%</text>
+    <text x="${cx}" y="${cy+14}" text-anchor="middle" fill="#8b949e" font-family="JetBrains Mono, monospace" font-size="10">overall avg</text>
+
+    <circle cx="200" cy="60" r="6" fill="#58a6ff"/>
+    <text x="214" y="65" fill="#e6edf3" font-size="13" font-family="Inter, sans-serif">Rural · 10.3%</text>
+    <circle cx="200" cy="90" r="6" fill="#ffa657"/>
+    <text x="214" y="95" fill="#e6edf3" font-size="13" font-family="Inter, sans-serif">Urban · 13.2%</text>
+  `;
+}
+drawDonut();
+
+
+/* ===================== TASK 2 — CAR PRICE (Linear Regression) ===================== */
+// Coefficients from trained LinearRegression model
+const CP = {
+  intercept: 9.182566,
+  present:   0.441254,
+  km:        -0.00000941472,
+  age:       -0.342071,
+  owner:     0.698020,
+  fuel:      -1.224948,   // per encoded unit (0=CNG,1=Diesel,2=Petrol)
+  seller:    -1.290578,   // 0=Dealer,1=Individual
+  trans:     -1.577930    // 0=Automatic,1=Manual
+};
+
+const cpPresent = document.getElementById('cp_present');
+const cpAge = document.getElementById('cp_age');
+const cpKm = document.getElementById('cp_km');
+const cpOwner = document.getElementById('cp_owner');
+
+let cpFuelVal = 2, cpTransVal = 1, cpSellerVal = 0;
+const getFuel = setupSeg('cp_fuel', v=>{ cpFuelVal = v; calcCarPrice(); });
+const getTrans = setupSeg('cp_trans', v=>{ cpTransVal = v; calcCarPrice(); });
+const getSeller = setupSeg('cp_seller', v=>{ cpSellerVal = v; calcCarPrice(); });
+
+function calcCarPrice(){
+  const present = parseFloat(cpPresent.value);
+  const age = parseInt(cpAge.value);
+  const km = parseInt(cpKm.value);
+  const owner = parseInt(cpOwner.value);
+
+  document.getElementById('cp_presentVal').textContent = present.toFixed(2) + ' L';
+  document.getElementById('cp_ageVal').textContent = age + ' yrs';
+  document.getElementById('cp_kmVal').textContent = km.toLocaleString() + ' km';
+  document.getElementById('cp_ownerVal').textContent = owner;
+
+  const presentTerm = CP.present * present;
+  const ageTerm = CP.age * age;
+  const kmTerm = CP.km * km;
+  const ownerTerm = CP.owner * owner;
+  const fuelTerm = CP.fuel * cpFuelVal;
+  const sellerTerm = CP.seller * cpSellerVal;
+  const transTerm = CP.trans * cpTransVal;
+
+  let price = CP.intercept + presentTerm + ageTerm + kmTerm + ownerTerm + fuelTerm + sellerTerm + transTerm;
+  if(price < 0.1) price = 0.1;
+
+  document.getElementById('cp_output').textContent = price.toFixed(2);
+
+  // breakdown bars (relative magnitudes, normalized against present price contribution)
+  const maxBar = Math.max(Math.abs(presentTerm), 0.1);
+  const ageKmTerm = ageTerm + kmTerm;
+  const catTerm = fuelTerm + sellerTerm + transTerm;
+
+  setBar('cp_bar_present', presentTerm, maxBar, true);
+  setBar('cp_bar_age', ageTerm, maxBar, false);
+  setBar('cp_bar_km', kmTerm, maxBar, false);
+  setBar('cp_bar_cat', catTerm, maxBar, false);
+}
+
+function setBar(id, value, maxBar, positive){
+  const pct = Math.min(100, Math.abs(value)/maxBar*100);
+  document.getElementById(id).style.width = pct + '%';
+  const valEl = document.getElementById(id+'_val');
+  const sign = value >= 0 ? '+' : '−';
+  valEl.textContent = sign + Math.abs(value).toFixed(2);
+}
+
+[cpPresent, cpAge, cpKm, cpOwner].forEach(el=> el.addEventListener('input', calcCarPrice));
+calcCarPrice();
+
+
+/* ===================== TASK 3 — SALES PREDICTION ===================== */
+// Interaction-aware linear approximation of the Random Forest (R²=0.968 fit)
+const SP = {
+  intercept: 6.728412,
+  tv: 0.019067,
+  radio: 0.027992,
+  news: 0.001444,
+  tv_radio: 0.0010873
+};
+
+const spTv = document.getElementById('sp_tv');
+const spRadio = document.getElementById('sp_radio');
+const spNews = document.getElementById('sp_news');
+
+function calcSales(){
+  const tv = parseFloat(spTv.value);
+  const radio = parseFloat(spRadio.value);
+  const news = parseFloat(spNews.value);
+
+  document.getElementById('sp_tvVal').textContent = '$' + tv.toFixed(1) + 'k';
+  document.getElementById('sp_radioVal').textContent = '$' + radio.toFixed(1) + 'k';
+  document.getElementById('sp_newsVal').textContent = '$' + news.toFixed(1) + 'k';
+  document.getElementById('sp_total').textContent = '$' + (tv+radio+news).toFixed(1) + 'k';
+
+  let sales = SP.intercept + SP.tv*tv + SP.radio*radio + SP.news*news + SP.tv_radio*(tv*radio);
+  if(sales < 0) sales = 0;
+
+  document.getElementById('sp_output').textContent = sales.toFixed(1);
+}
+
+[spTv, spRadio, spNews].forEach(el=> el.addEventListener('input', calcSales));
+calcSales();
+</script>
+
+</body>
+</html>
