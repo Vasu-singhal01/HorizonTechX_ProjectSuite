@@ -2,6 +2,17 @@
 
 Interactive demo combining all 3 Data Science Internship projects.
 
+## 🖥️ Preview
+
+### 📊 Unemployment Analysis
+![Unemployment](preview_1.png)
+
+### 🚗 Car Price Prediction
+![Car Price](preview_2.png)
+
+### 📈 Sales Prediction
+![Sales](preview_3.png)
+
 ## 🔗 Live Demo
 👉 [Click here to open the interactive demo](https://horizontechx-projectsuite.onrender.com)
 
